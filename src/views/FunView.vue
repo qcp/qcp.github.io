@@ -3,22 +3,19 @@ import MobileView from '@/components/MobileView.vue'
 import NavigationLine from '@/components/NavigationLine.vue'
 
 import RiGameFill from '~icons/ri/game-fill'
-import RiMegaphoneFill from '~icons/ri/megaphone-fill'
-import RiAliensFill from '~icons/ri/aliens-fill'
+import RiArrowGoBackFill from '~icons/ri/arrow-go-back-fill'
 </script>
 
 <template>
   <mobile-view>
     <div style="flex-grow: 1" />
-    <h1>GOTCHA</h1>
+    <h2>Some fun here soon</h2>
     <h1>
       <ri-game-fill style="color: yellow;" />
     </h1>
     <div style="flex-grow: 1" />
-
     <navigation-line>
-      <ri-megaphone-fill @click="$router.push('fun')" />
-      <ri-aliens-fill @click="$router.push('about')" />
+      <ri-arrow-go-back-fill @click="$router.back()" />
     </navigation-line>
   </mobile-view>
 </template>
