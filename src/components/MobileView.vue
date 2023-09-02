@@ -22,7 +22,7 @@
   gap: 1em;
   padding: 1em;
 
-  background-color: var(--color-background-soft);
+  background-color: color-mix(in oklab, var(--color-background-soft), transparent 25%)
 }
 
 @media screen and (orientation: landscape) {
