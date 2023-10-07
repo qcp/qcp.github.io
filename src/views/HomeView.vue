@@ -1,84 +1,112 @@
 <script setup lang="ts">
 import MobileView from '@/components/MobileView.vue'
-import NavigationLine from '@/components/NavigationLine.vue'
 
-import RiGameFill from '~icons/ri/game-fill'
-import RiMegaphoneFill from '~icons/ri/megaphone-fill'
-import RiAliensFill from '~icons/ri/aliens-fill'
+import RiBearSmileLine from '~icons/ri/bear-smile-line'
+import RiSkull2Line from '~icons/ri/skull-2-line'
+import RiRobot2Line from '~icons/ri/robot-2-line'
+import RiGhostLine from '~icons/ri/ghost-line'
+import RiAliensLine from '~icons/ri/aliens-line'
+import RiMickeyLine from '~icons/ri/mickey-line'
 
-import '@/assets/color-animation.css'
+import { useCycleList, useIntervalFn, useSwipe, useVibrate } from '@vueuse/core'
+
+import { useShake } from '@/composables/useShake'
+import { ref, watch } from 'vue'
+import { openUrl } from '@/utils'
+
+const isShake = useShake({ threshold: 20 })
+const { vibrate } = useVibrate({ pattern: [500, 100, 300, 100, 200, 50, 200] })
+watch(isShake, (isShake) => isShake && vibrate())
+
+const el = ref<EventTarget>()
+const { direction } = useSwipe(el)
+watch(direction, () => {
+  switch (direction.value) {
+    case 'up':
+      return openUrl('https://youtu.be/dQw4w9WgXcQ')
+    case 'left':
+    case 'right':
+      return nextLogo()
+  }
+})
+
+const { state: logo, next: nextLogo } = useCycleList([
+  RiBearSmileLine,
+  RiSkull2Line,
+  RiRobot2Line,
+  RiGhostLine,
+  RiAliensLine,
+  RiMickeyLine
+])
+
+const {
+  state: text,
+  index: textIndex,
+  next: nextText
+} = useCycleList([
+  'reserved for future kek',
+  'stay tuned',
+  'or swipe',
+  'or not',
+  'or shake',
+  'or close',
+  'or dbl tap',
+  'but wait',
+  '...'
+])
+useIntervalFn(nextText, 2500)
 </script>
 
 <template>
-  <mobile-view>
-    <div style="flex-grow: 1" />
-    <div class="packman">
-      <ri-game-fill class="color-animation" style="--color-to: yellow;" />
-    </div>
-    <h1>GOTCHA</h1>
+  <mobile-view class="view" ref="el" @dblclick="$router.push({ name: 'about' })">
     <div style="flex-grow: 1" />
 
-    <navigation-line>
-      <ri-megaphone-fill @click="$router.push('fun')" />
-      <ri-aliens-fill @click="$router.push('about')" />
-    </navigation-line>
+    <component :is="logo" class="bear" />
+
+    <h1>GOTCHA</h1>
+
+    <transition name="slide-up" mode="out-in">
+      <span :key="textIndex">
+        {{ text }}
+      </span>
+    </transition>
+
+    <div style="flex-grow: 1" />
   </mobile-view>
 </template>
 
 <style scoped>
-.packman {
-  font-size: 2em;
-  padding: 2px;
-  animation: packman-move 15s infinite;
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.25s ease-out;
 }
 
-@keyframes packman-move {
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(2em);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-2em);
+}
+
+.view {
+}
+
+.bear {
+  font-size: 2em;
+  --rotation: 10deg;
+  rotate: var(--rotation);
+  transform-origin: bottom;
+  animation: bear-nods 5s infinite both;
+}
+@keyframes bear-nods {
   0% {
-    translate: 0em 0em;
+    rotate: var(--rotation);
   }
-
-  19% {
-    rotate: 0deg;
-  }
-
-  20% {
-    translate: 6ch 0em;
-  }
-
-  22%,
-  38% {
-    rotate: 90deg;
-  }
-
-  40% {
-    translate: 6ch 4em;
-  }
-
-  42%,
-  58% {
-    rotate: 180deg;
-  }
-
-  60% {
-    translate: -6ch 4em;
-  }
-
-  62%,
-  78% {
-    rotate: 270deg;
-  }
-
-  80% {
-    translate: -6ch 0em;
-  }
-
-  82%,
-  98% {
-    rotate: 0deg;
-  }
-
-  100% {
-    translate: 0ch 0em;
+  50% {
+    rotate: calc(-1 * var(--rotation));
   }
 }
 </style>

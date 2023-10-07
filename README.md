@@ -1,6 +1,6 @@
 # qcp pr page
 
-Some description
+reserved for future kek
 
 ## help links
 

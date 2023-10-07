@@ -1,35 +1,22 @@
 <script setup lang="ts">
-import NavigationLine from '@/components/NavigationLine.vue'
 import MobileView from '@/components/MobileView.vue'
 
-import RiArrowGoBackFill from '~icons/ri/arrow-go-back-fill'
 import RiTelegramFill from '~icons/ri/telegram-fill'
 import RiGithubFill from '~icons/ri/github-fill'
 
-import '@/assets/color-animation.css'
-
-function openUrl(url: string) {
-  window.open(url, '_blank')
-}
+import { openUrl } from '@/utils'
 </script>
 
 <template>
-  <mobile-view>
-    <div style="flex-grow: 1;" />
-
-    <h2>I'm Misha</h2>
-    <i>awesome software developer</i>
+  <mobile-view @dblclick="$router.push({ name: 'home' })">
+    <div style="flex-grow: 1" />
 
     <div class="social">
-      <ri-telegram-fill class="color-animation" style=" --color-to: #3390ec;" @click="openUrl('https://t.me/m_bort')" />
+      <ri-telegram-fill style="color: #3390ec" @click="openUrl('https://t.me/+TK1mucOyvZgzYzA6')" />
       <ri-github-fill @click="openUrl('https://github.com/qcp')" />
     </div>
 
-    <div style="flex-grow: 1;" />
-
-    <navigation-line>
-      <ri-arrow-go-back-fill @click="$router.back()" />
-    </navigation-line>
+    <div style="flex-grow: 1" />
   </mobile-view>
 </template>
 
