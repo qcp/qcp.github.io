@@ -87,6 +87,4 @@ body {
 #app {
   height: 100dvh;
   overflow: hidden;
-  transform-style: preserve-3d;
-  perspective: 800px;
 }
