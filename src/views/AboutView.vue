@@ -17,7 +17,7 @@ import { openUrl } from '@/utils'
         style="color: #3390ec"
         @click="openUrl('https://t.me/+TK1mucOyvZgzYzA6')"
       />
-      <ri-github-fill @click="openUrl('https://github.com/qcp')" class="button" />
+      <ri-github-fill class="button" @click="openUrl('https://github.com/qcp')" />
     </div>
 
     <div style="flex-grow: 1" />

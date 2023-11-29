@@ -1,7 +1,7 @@
 import { refAutoReset, tryOnMounted, tryOnUnmounted, useEventListener } from '@vueuse/core'
 import { bypassFilter, createFilterWrapper } from '@vueuse/shared'
 
-type IOptions = { threshold: number; delay: number }
+interface IOptions { threshold: number, delay: number }
 export function useShake(options?: Partial<IOptions>) {
   const { threshold = 15, delay = 2000 } = options || {}
 
@@ -9,8 +9,8 @@ export function useShake(options?: Partial<IOptions>) {
 
   tryOnMounted(() => {
     if (
-      'requestPermission' in DeviceOrientationEvent &&
-      typeof DeviceOrientationEvent.requestPermission === 'function'
+      'requestPermission' in DeviceOrientationEvent
+      && typeof DeviceOrientationEvent.requestPermission === 'function'
     ) {
       DeviceOrientationEvent.requestPermission()
     }

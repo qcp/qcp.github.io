@@ -1,7 +1,7 @@
 <template>
   <main class="main">
     <div class="mobile-view">
-      <slot></slot>
+      <slot />
     </div>
   </main>
 </template>
